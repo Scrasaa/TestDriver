@@ -16,21 +16,21 @@ int main()
     std::cout << "ProcessID: " << ProcessID << std::endl;
     std::cout << "Addy: 0x" << std::hex << address << std::endl;
 
-    uintptr_t LocalPlayerAddress = Driver.ReadVirtualMemory<uintptr_t>(ProcessID, address + 0x16CF800, sizeof(uintptr_t));
+    uintptr_t LocalPlayerAddress = Driver.ReadVirtualMemory<uintptr_t>(ProcessID, address + 0x16C2B18, sizeof(uintptr_t));
     std::cout << "LocalPlayer Address: 0x" << LocalPlayerAddress << std::endl;
 
-    if (LocalPlayerAddress)
-    {
-        std::cout << "Local Player Addy valid!\n";
-        int32_t iLocalHealth = Driver.ReadVirtualMemory<int32_t>(ProcessID, LocalPlayerAddress + 0x32C, sizeof(int32_t));
-        std::cout << "Local Player Health: " << iLocalHealth << std::endl;
-        Driver.WriteVirtualMemory(ProcessID, (LocalPlayerAddress + C_CSPlayerPawnBase::m_flFlashDuration), 0.f, sizeof(0.f));
-    }
+   
 
     while (true)
     {
         
-
+        if (LocalPlayerAddress)
+        {
+        //    int32_t iLocalHealth = Driver.ReadVirtualMemory<int32_t>(ProcessID, LocalPlayerAddress + 0x32C, sizeof(int32_t));
+          //  std::cout << "Local Player Health: " << std::dec << iLocalHealth << std::endl;
+            Driver.WriteVirtualMemory(ProcessID, (LocalPlayerAddress + C_CSPlayerPawnBase::m_flFlashDuration), 0.f, sizeof(0.f));
+            Sleep(10);
+        }
         
     }
 

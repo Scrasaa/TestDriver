@@ -2,6 +2,7 @@
 #include <ntdef.h>
 #include <ntifs.h>
 
-ULONG CS2ClientDLLAddy, grabProcessId;
+ULONGLONG CS2ClientDLLAddy;
+ULONG grabProcessId;
 PDEVICE_OBJECT pDeviceObject;
 UNICODE_STRING dev, dos;

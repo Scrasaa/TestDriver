@@ -13,7 +13,7 @@
 typedef struct _KERNEL_READ_REQUEST
 {
 	ULONG ProcessId;
-	ULONG Address;
+	ULONGLONG Address;
 	PVOID pBuffer;
 	ULONG SIZE;
 
@@ -22,7 +22,7 @@ typedef struct _KERNEL_READ_REQUEST
 typedef struct _KERNEL_WRITE_REQUEST
 {
 	ULONG ProcessId;
-	ULONG Address;
+	ULONGLONG Address;
 	PVOID pBuffer;
 	ULONG SIZE;
 

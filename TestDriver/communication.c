@@ -61,7 +61,7 @@ NTSTATUS IoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp)
     if (ControlCode == IO_GET_CLIENTADDRESS)
     {
         // Handle the specific IOCTL request (IO_GET_CLIENADDRESS)
-        PULONG Output = (PULONG)Irp->AssociatedIrp.SystemBuffer;
+        PULONGLONG Output = (PULONGLONG)Irp->AssociatedIrp.SystemBuffer;
         // Copy the address of Garry's Mod Client.DLL to the output buffer
         *Output = CS2ClientDLLAddy;
 

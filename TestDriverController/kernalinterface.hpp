@@ -58,7 +58,7 @@ public:
     }
 
     template <typename type>
-    type ReadVirtualMemory(ULONG ProcessId, ULONG ReadAddress, SIZE_T Size)
+    type ReadVirtualMemory(ULONG ProcessId, ULONGLONG ReadAddress, SIZE_T Size)
     {
         type Buffer;
 
@@ -78,7 +78,7 @@ public:
     }
 
     template <typename type>
-    bool WriteVirtualMemory(ULONG ProcessId, ULONG WriteAddress, type WriteValue, SIZE_T Size)
+    bool WriteVirtualMemory(ULONG ProcessId, ULONGLONG WriteAddress, type WriteValue, SIZE_T Size)
     {
         if (hDriver == INVALID_HANDLE_VALUE)
             return false;
