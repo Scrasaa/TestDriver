@@ -41,7 +41,6 @@ NTSTATUS CloseCall(PDEVICE_OBJECT DeviceObject, PIRP Irp)
 	return STATUS_SUCCESS;
 }
 
-
 // Function called for handling IOCTL (Input/Output Control) requests
 NTSTATUS IoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp)
 {
