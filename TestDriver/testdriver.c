@@ -5,6 +5,8 @@
 #include "events.h"
 #include "data.h"
 #include "communication.h"
+#include "ApcSignatures.h"
+
 
 // Driver Entry Point
 // This function is called when the driver is loaded.
@@ -40,6 +42,24 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT pDriverObject, PUNICODE_STRING pRegistryPath
     // Set flags for direct I/O and mark device as initialized
     pDeviceObject->Flags |= DO_DIRECT_IO;
     pDeviceObject->Flags &= ~DO_DEVICE_INITIALIZING;
+
+    /* Get both Apc functions and then call it xd*/
+    ResolveKernelRoutines();
+    PKAPC Apc = ExAllocatePool(NonPagedPool, sizeof(KAPC));
+
+	if (Apc == NULL)
+	{
+		DebugMessage("[-] ExAllocatePool failed!\n");   
+		return STATUS_UNSUCCESSFUL;
+	}
+
+    KIRQL OldIrql;
+    KeRaiseIrql(DISPATCH_LEVEL, &OldIrql);
+    // ExFreePool could also be just NULL
+	KeInitializeApc(Apc, KeGetCurrentThread(), OriginalApcEnvironment, (void*)ExFreePool, (void*)ExFreePool, (void*)TestApcRoutine, KernelMode, NULL);
+	KeInsertQueueApc(Apc, NULL, NULL, 0);
+
+	KeLowerIrql(OldIrql);
 
     return STATUS_SUCCESS;
 }

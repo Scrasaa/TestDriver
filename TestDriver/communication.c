@@ -1,9 +1,11 @@
 #pragma warning (disable : 4022)
 
 #include "communication.h"
-#include "messages.h"
 #include "data.h"
 #include "memory.h"
+#include "messages.h"
+
+#define IS_SYSTEM_THREAD() IoIsSystemThread(PsGetCurrentThread())
 
 // Function called when a create operation is requested
 NTSTATUS CreateCall(PDEVICE_OBJECT DeviceObject, PIRP Irp)
@@ -40,6 +42,44 @@ NTSTATUS CloseCall(PDEVICE_OBJECT DeviceObject, PIRP Irp)
 	// Return the status of the operation (success)
 	return STATUS_SUCCESS;
 }
+
+/*  Used as a test to check if work item is queued and dequeued in sys thread
+VOID WorkItemCallback(PDEVICE_OBJECT DeviceObject, PVOID Context)
+{
+    UNREFERENCED_PARAMETER(DeviceObject);
+
+    if (IS_SYSTEM_THREAD())
+    {
+        DebugMessage("System thread!\n");
+    }
+    else
+    {
+		DebugMessage("Not a system thread!\n");
+    }
+
+    // Clean up any resources if needed
+
+    // Complete the work item
+    IoFreeWorkItem((PIO_WORKITEM)Context);
+}
+
+NTSTATUS QueueWorkItem(PDEVICE_OBJECT DeviceObject)
+{
+    PIO_WORKITEM workItem = IoAllocateWorkItem(DeviceObject);
+
+    if (workItem == NULL)
+    {
+        // Failed to allocate work item
+        return STATUS_INSUFFICIENT_RESOURCES;
+    }
+
+    // Queue the work item
+    IoQueueWorkItem(workItem, WorkItemCallback, DelayedWorkQueue, workItem);
+
+    // Return the status of the operation
+    return STATUS_SUCCESS;
+}
+*/
 
 // Function called for handling IOCTL (Input/Output Control) requests
 NTSTATUS IoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp)

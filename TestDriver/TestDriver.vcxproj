@@ -88,6 +88,9 @@
     <Link>
       <AdditionalOptions>/INTEGRITYCHECK %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\wdf\kmdf\1.33;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DriverSign>
@@ -111,6 +114,7 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ApcSignatures.h" />
     <ClInclude Include="communication.h" />
     <ClInclude Include="data.h" />
     <ClInclude Include="events.h" />
@@ -119,6 +123,7 @@
     <ClInclude Include="messages.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ApcDumper.c" />
     <ClCompile Include="communication.c" />
     <ClCompile Include="events.c" />
     <ClCompile Include="memory.c" />
